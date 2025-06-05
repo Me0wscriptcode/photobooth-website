@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photobooth Moments</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+    background: #e4cfd5;
+background: radial-gradient(circle, rgba(240, 187, 202, 1) 12%, rgba(148, 187, 233, 1) 100%);
+      line-height: 1.6;
+    }
+    header.hero {
+    font-size: 35px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      color: white;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(to top, #fbc2eb 0%, #a6c1ee 100%); 
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 10px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    nav a {
+      text-decoration: none;
+      color: #333;
+      padding: 10px;
+    }
+    .btn, button {
+      text-decoration: none;
+      background: yellow;
+      border: none;
+      padding: 15px 25px;
+      cursor: pointer;
+      border-radius: 20px;
+      font-size: 15px;
+    }
+  .koma{
+     background: yellow; 
+      background: #f9f9f9;
+      padding: 20px;
+      width: 280px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+       transition: background-color 0.3s ease;
+    }
+    .section {
+      padding: 60px 20px;
+      text-align: center;
+      font-style: italic;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .card {
+      background: #f9f9f9;
+      padding: 20px;
+      width: 280px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+       transition: background-color 0.3s ease;
+    }
+    .card:active {
+      background:#81a5e2;
+     
+    }
+    
+    .contact form {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .contact input, .contact textarea {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .testimonial {
+      background: #eee;
+      margin: 10px auto;
+      max-width: 500px;
+      padding: 15px;
+      border-radius: 10px;
+    }
+    #lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+    }
+    #lightbox img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+    #countdown {
+      font-size: 1.5rem;
+      margin: 20px 0;
+    }
+    footer {
+      text-align: center;
+      background: #333;
+      color: white;
+      padding: 20px;
+    }
+   
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#packages">Packages</a>
+    <a href="#contact">Contact</a>
+  </nav>  <header class="hero">
+    <div class="hero-content">
+      <h1>Photobooth Moments</h1>
+      <p>Capture your best moments with us!</p>
+   <button> <a href="phootoooth.html" class="btn">click now</a></button> 
+   <div class="hero-image"></div>
+  
+    
+  </header>  <section id="koma" class="section">
+    <h2>About Us</h2>
+    <p>We are a fun-loving team that helps you capture memories with our modern photo booths! Whether it’s a wedding, party, or event, our booths add joy and excitement. With cool props, instant prints, and stylish backdrops, your guests will have a blast and take home special memories.
+
+Let us bring smiles to your event — one photo at a time!
+
+</p>
+  </section>  <section id="gallery" class="section">
+    <h2>Gallery</h2>
+    <div class="gallery-grid">
+      <img src="pujaaaa/ssws.jpg" onclick="openLightbox(this.src)">
+      <img src="pujaaaa/23.jpg" onclick="openLightbox(this.src)">
+      <img src="pujaaaa/pii.jpg" onclick="openLightbox(this.src)">
+    </div>
+  </section>  <section class="section">
+    <h2>Try Filters</h2>
+    <div>
+      <button onclick="applyFilter('grayscale(100%)')">Grayscale</button>
+      <button onclick="applyFilter('sepia(100%)')">Sepia</button>
+      <button onclick="applyFilter('none')">Normal</button>
+    </div>
+  </section>  <section id="packages" class="section">
+    <h2>Packages</h2>
+ 
+    <div class="cards">
+      <div class="card">
+        <h3>Basic</h3>
+        <p>2 hours, 100 prints</p>
+        <p>₹4999</p></div>
+      <div class="card">
+        <h3>Standard</h3>
+        <p>4 hours, unlimited prints</p>
+        <p>₹8999</p></div>
+      <div class="card"><h3>Premium</h3><p>Full day, custom backdrop</p><p>₹14999</p></div>
+    </div>
+     <section id="contact" class="contact section">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/example" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send</button>
+    </form>
+    <br>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0158462704566!2d144.95744361586237!3d-37.81720944237354!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43f0f5e3d5%3A0x1e4e02bdaf7db45!2sVictoria%20Harbour%20Promenade!5e0!3m2!1sen!2sus!4v1633725585634!5m2!1sen!2sus" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+  </section>  <footer>
+    <p>© 2025 Photobooth Moments. All rights reserved.</p>
+  </footer>  <div id="lightbox" onclick="this.style.display='none'">
+    <img src="" alt="Lightbox Image">
+  </div>  <script>
+    const sections = document.querySelectorAll(".section");
+    window.addEventListener("scroll", () => {
+      sections.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) {
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        }
+      });
+    });
+    sections.forEach((el) => {
+      el.style.opacity = 0;
+      el.style.transform = "translateY(50px)";
+      el.style.transition = "all 1s ease";
+    });
+
+    function applyFilter(filter) {
+      document.querySelectorAll(".gallery-grid img").forEach(img => {
+        img.style.filter = filter;
+      });
+    }
+
+    function openLightbox(src) {
+      const lb = document.getElementById("lightbox");
+      lb.style.display = "flex";
+      lb.querySelector("img").src = src;
+    }
+
+    function countdown() {
+      const countDate = new Date("2025-06-30").getTime();
+      const now = new Date().getTime();
+      const gap = countDate - now;
+      const day = Math.floor(gap / (1000 * 60 * 60 * 24));
+      const hour = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const min = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+      const sec = Math.floor((gap % (1000 * 60)) / 1000);
+      document.getElementById("countdown").innerText =
+        'Offer ends in: ${day}d ${hour}h ${min}m ${sec}s';
+    }
+    setInterval(countdown, 1000);
+  </script></body>
+</html>
