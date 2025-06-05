@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel ="stylesheet" href="https://fontawesome.com/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Photobooth + Yearbook</title>
+  <link rel="stylesheet" href="photoooth.css">
+  <style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffe6f0;
+  color: #333;
+}
+header {
+  background: linear-gradient(135deg, #ff99c2, #ff66a3);
+  padding: 40px 20px;
+  text-align: center;
+ 
+  color: white;
+}
+header p { font-size: 30px;
+  font-weight: 800;
+
+}
+header h1 { font-size: 12px; margin: 0; }.main {
+text-align: center;
+padding: 60px;
+}
+
+.camera-container {
+background: #ffccdd;
+padding: 20px;
+border-radius: 20px;
+box-shadow: 0 0 20px #ff99c2;
+display: inline-block;
+margin-bottom: 30px;
+}
+
+video, canvas {
+width: 320px;
+height: 240px;
+border-radius: 15px;
+border: 5px solid #ff99c2;
+margin-bottom: 10px;
+}
+
+.controls {
+margin-top: 10px;
+}
+button, select, input[type="file"] {
+background: #ff66a3;
+color: white;
+padding: 10px 20px;
+margin: 5px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+font-weight: bold;
+transition: background 0.3s;
+}
+button:hover, select:hover, input[type="file"]:hover {
+background: #ff3385;
+}
+
+.gallery { max-width: 1000px; margin: 0 auto; padding: 20px; }
+.gallery h2 { text-align: center; color: #ff3399; }
+.photos {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+gap: 15px;
+margin-top: 20px;
+}
+.photos img {
+width: 100%; border-radius: 10px;
+border: 3px solid #ff99c2;
+box-shadow: 0 0 10px #ff99c2;
+}
+
+.yearbook-section {
+text-align: center;
+padding: 40px 20px;
+background: #ffd6e8;
+border-top: 5px solid #ff99c2;
+}
+.yearbook-section h2 {
+color: #ff3399;
+font-size: 2.5em;
+margin-bottom: 30px;
+}
+
+.yearbook-page {
+background: #fff0f5;
+padding: 20px;
+border-radius: 20px;
+box-shadow: 0 0 15px #ff99c2;
+display: none;
+margin: 0 auto 30px;
+width: 320px;
+animation: flip 0.6s ease-in-out;
+}
+
+.yearbook-image {
+width: 100%;
+height: 240px;
+object-fit: cover;
+border-radius: 15px;
+border: 5px solid #ff99c2;
+}
+
+textarea {
+width: 100%; height: 80px; margin-top: 10px;
+border-radius: 10px; border: 2px solid #ff99c2;
+padding: 10px; resize: none; font-family: 'Poppins';
+background: #ffe6f0;
+}
+
+.yearbook-controls {
+margin-top: 10px;
+}
+
+@keyframes flip {
+from { transform: rotateY(90deg); opacity: 0; }
+to { transform: rotateY(0deg); opacity: 1; }
+}
+
+  </style>
+</head>
+<body><header>
+ 
+  <p></p>
+    <i class="fa-solid fa-camera"></i>
+  </p>
+</header><div class="main">
+  <div class="camera-container">
+    <video id="video" autoplay></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div class="controls">+
+      <select id="filter">
+        <option value="none">No Filter</option>
+        <option value="grayscale(100%)">Grayscale</option>
+        <option value="blur(3px)">Blur</option>
+        <option value="brightness(1.5)">Bright</option>
+        <option value="contrast(1.5)">Contrast</option>
+        <option value="hue-rotate(300deg)">Pink Hue</option>
+        <option value="sepia(1)">Sepia</option>
+      </select><br>
+      <button onclick="takePhoto()">Click Photo</button>
+      <button onclick="downloadPhoto()">Download</button>
+      <button onclick="resetPhoto()">Reset</button><br>
+      <input type="file" id="upload" accept="image/*" />
+    </div>
+  </div>
+</div><section class="gallery">
+  <h2>Uploaded Photos</h2>
+  <div class="photos" id="photoGallery"></div>
+</section><section class="yearbook-section" id="yearbook">
+  <h2>My Yearbook</h2>
+  <div class="yearbook-page" id="page1">
+    <input type="file" accept="image/*" onchange="loadYearbookImage(event, 1)"><br>
+    <img class="yearbook-image" id="ybImg1" src="" alt="Page 1 Image"><br>
+    <textarea id="ybText1" placeholder="" oninput="saveYearbook(1)">This page holds my first special memory of the year!</textarea>
+  </div>
+  <div class="yearbook-page" id="page2">
+    <input type="file" accept="image/*" onchange="loadYearbookImage(event, 2)"><br>
+    <img class="yearbook-image" id="ybImg2" src="" alt="Page 2 Image"><br>
+    <textarea id="ybText2" placeholder="" oninput="saveYearbook(2)">Here's a memory that makes me smile every time I look at it!</textarea>
+  </div>
+  <div class="yearbook-page" id="page3">
+    <input type="file" accept="image/*" onchange="loadYearbookImage(event, 3)"><br>
+    <img class="yearbook-image" id="ybImg3" src="" alt="Page 3 Image"><br>
+    <textarea id="ybText3" placeholder="" oninput="saveYearbook(3)">The final page — ending the year with love, laughter, and lessons!</textarea>
+  </div>
+  <div class="yearbook-controls">
+    <button onclick="flipPage(-1)">Previous Page</button>
+    <button onclick="flipPage(1)">Next Page</button>
+  </div>
+</section>
+  <script >
+    const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const filter = document.getElementById('filter');
+  const gallery = document.getElementById('photoGallery');
+  const uploadInput = document.getElementById('upload');
+  let currentPage = 1;
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => { video.srcObject = stream; });
+
+  filter.addEventListener('change', () => {
+    video.style.filter = filter.value;
+  });
+
+  function takePhoto() {
+    const context = canvas.getContext('2d');
+    canvas.style.display = 'block';
+    video.style.display = 'none';
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.filter = filter.value;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const imageURL = canvas.toDataURL();
+    saveImageToLocal(imageURL);
+    reloadGallery();
+  }
+
+  function downloadPhoto() {
+    const link = document.createElement('a');
+    link.download = 'photobooth_image.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  }
+
+  function resetPhoto() {
+    canvas.style.display = 'none';
+    video.style.display = 'block';
+  }
+
+  uploadInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imgSrc = e.target.result;
+        saveImageToLocal(imgSrc);
+        reloadGallery();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  function addToGallery(src, index) {
+    const wrapper = document.createElement('div');
+    const img = document.createElement('img');
+    img.src = src;
+    const delBtn = document.createElement('button');
+    delBtn.textContent = 'Delete';
+    delBtn.onclick = () => deletePhoto(index);
+    wrapper.appendChild(img);
+    wrapper.appendChild(delBtn);
+    gallery.appendChild(wrapper);
+  }
+
+  function saveImageToLocal(imageData) {
+    let savedImages = JSON.parse(localStorage.getItem('savedPhotos')) || [];
+    savedImages.push(imageData);
+    localStorage.setItem('savedPhotos', JSON.stringify(savedImages));
+  }
+
+  function deletePhoto(index) {
+    let savedImages = JSON.parse(localStorage.getItem('savedPhotos')) || [];
+    savedImages.splice(index, 1);
+    localStorage.setItem('savedPhotos', JSON.stringify(savedImages));
+    reloadGallery();
+  }
+
+  function reloadGallery() {
+    gallery.innerHTML = '';
+    const savedImages = JSON.parse(localStorage.getItem('savedPhotos')) || [];
+    savedImages.forEach((src, index) => {
+      addToGallery(src, index);
+    });
+  }
+
+  window.onload = () => {
+    reloadGallery();
+    loadYearbookPages();
+    showPage(currentPage);
+  };
+
+  function showPage(num) {
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('page' + i).style.display = 'none';
+    }
+    document.getElementById('page' + num).style.display = 'block';
+  }
+
+  function flipPage(dir) {
+    currentPage += dir;
+    if (currentPage < 1) currentPage = 3;
+    if (currentPage > 3) currentPage = 1;
+    showPage(currentPage);
+  }
+
+  function loadYearbookImage(event, pageNum) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById('ybImg' + pageNum).src = e.target.result;
+      saveYearbook(pageNum);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
+
+  function saveYearbook(pageNum) {
+    const img = document.getElementById('ybImg' + pageNum).src;
+    const text = document.getElementById('ybText' + pageNum).value;
+    localStorage.setItem('ybImg' + pageNum, img);
+    localStorage.setItem('ybText' + pageNum, text);
+  }
+
+  function loadYearbookPages() {
+    for (let i = 1; i <= 3; i++) {
+      document.getElementById('ybImg' + i).src = localStorage.getItem('ybImg' + i) || '';
+      document.getElementById('ybText' + i).value = localStorage.getItem('ybText' + i) || '';
+    }
+  }
+  </script>
+</script></body>
+</html>
